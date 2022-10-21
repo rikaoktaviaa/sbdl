@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UTS</title>
+</head>
+<body>
+    <style>
+        header {
+    background: #00008B;
+    line-height: 30px;
+    text-align: center;
+    color: white;
+}
+        table {
+            border-collapse: collapse;
+            margin: 0 1rem;
+            width: 50%;
+            text-align: center;
+        }
+        table tr td{
+            border: 1px solid black;
+        }
+
+        th {
+            border: 1px solid black;
+            background-color: #f0f0f0;
+        }
+    </style>
+
+    <header>
+            <H1>DATA PANEN JAGUNG</H1>
+    </header>
+
+        <center><button onclick="myFunctionTampil()">Tampil dan Sembunyikan Data</button>
+
+       <center><p>Pencarian</p>
+        <input id="pencarian" type="text" placeholder=" Cari"></center>
+
+    <br>
+
+        <table id="tabel-data-panen">
+            <thead>
+                <th>TAHUN</th>
+                <th>JENIS</th>
+                <th>HASIL</th>
+            </thead>
+        </table>
+
+</body>
+
+<script>
+
+    var dataPanen = 
+    [
+    {"tahun":"2000","jenis":"padi","hasil":"20"},
+    {"tahun":"2001","jenis":"padi","hasil":"40"}, 
+    {"tahun":"2002","jenis":"padi","hasil":"60"},
+    {"tahun":"2003","jenis":"padi","hasil":"50"}, 
+    {"tahun":"2004","jenis":"padi","hasil":"30"},
+    {"tahun":"2005","jenis":"padi","hasil":"40"}, 
+    {"tahun":"2006","jenis":"padi","hasil":"40"},
+    {"tahun":"2007","jenis":"padi","hasil":"50"}, 
+    {"tahun":"2000","jenis":"jagung","hasil":"30"},
+    {"tahun":"2001","jenis":"jagung","hasil":"40"}, 
+    {"tahun":"2002","jenis":"jagung","hasil":"40"},
+    {"tahun":"2003","jenis":"jagung","hasil":"50"}, 
+    {"tahun":"2004","jenis":"jagung","hasil":"20"},
+    {"tahun":"2005","jenis":"jagung","hasil":"40"}, 
+    {"tahun":"2006","jenis":"jagung","hasil":"60"},
+    {"tahun":"2007","jenis":"jagung","hasil":"50"}]
+
+    var tabel_1 = document.getElementById("tabel-data-panen");
+    var tabel_2 = document.createElement("tbody");
+    for(var i = 0; i < dataPanen.length; i++) {
+        var row = document.createElement("tr");
+        for(var prop in dataPanen[i]) {
+            var cell = document.createElement("td");
+            var cellText = document.createTextNode(dataPanen[i][prop]);
+            cell.appendChild(cellText);
+            row.appendChild(cell);
+        }
+        tabel_2.appendChild(row);
+    }
+    tabel_1.appendChild(tabel_2);
+
+    function myFunctionTampil(){
+        var hide = document.getElementById("tabel-data-panen"); 
+        if (hide.style.display === "none"){
+            hide.style.display = "revert";
+        } else {
+            hide.style.display = "none";
+        }
+    }
+
+    var searchbox = document.getElementById("pencarian");
+
+    searchbox.addEventListener('keyup', function(){
+        var key = this.value;
+        key = key.toUpperCase();
+        var table = document.getElementById("tabel-data-panen");
+        var all_data = table.getElementsByTagName("tr");
+        for(var i=0; i<all_data.length; i++){
+                var all_columns = all_data[i].getElementsByTagName("td");
+                for(j=0;j<all_columns.length; j++){
+                    if(all_columns[j]){
+                        var column_value = all_columns[j].textContent || all_columns[j].innerText;
+                        column_value = column_value.toUpperCase();
+                        if(column_value.indexOf(key) > -1){
+                            all_data[i].style.display = "";
+                            break;
+                        }else{
+                            all_data[i].style.display = "none";
+                        }
+                    }
+                }
+            }
+        })
+
+</script>
+</html>
